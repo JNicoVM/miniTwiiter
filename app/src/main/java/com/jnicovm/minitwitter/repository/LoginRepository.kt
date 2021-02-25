@@ -1,12 +1,10 @@
 package com.jnicovm.minitwitter.repository
 
-import com.jnicovm.minitwitter.dao.AccountDao
 import com.jnicovm.minitwitter.dao.LoginDao
 import com.jnicovm.minitwitter.data.RemoteLoginDataSource
 import com.jnicovm.minitwitter.models.request.RequestLogin
-import javax.inject.Inject
 
-class LoginRepository @Inject constructor(
+class LoginRepository (
     private val remoteLoginDataSource: RemoteLoginDataSource,
     private val loginDao: LoginDao
 ){
@@ -22,7 +20,9 @@ class LoginRepository @Inject constructor(
 
     fun setPassword(passWord: String) = loginDao.setPassword(passWord)
 
-    fun buildAccountModel(email: String, userName: String, password: String) = loginDao.buildAccountModel(email, userName, password)
+    fun buildLoginModel(email: String,  password: String) = loginDao.buildLoginModel(email, password)
+
+    fun buildLoginRequest(email: String, password: String) = loginDao.buildLoginRequest(email, password)
 
     fun perfomLogin(requestLogin: RequestLogin) = remoteLoginDataSource.perfomLogin(requestLogin)
 }

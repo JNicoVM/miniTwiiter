@@ -32,31 +32,31 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun initializeUi() {
-        val factory = InjectorUtils.provideSignupViewModelFactory()
-        val viewModel = ViewModelProvider(this, factory)
-            .get(SignupViewModel::class.java)
-        viewModel.getEmail().observe(this, Observer { email ->
-            binding.etEmailSignup.setText(email)
-        })
-        viewModel.getPassword().observe(this, Observer { password ->
-            binding.etPasswordSignup.setText(password)
-        })
-        viewModel.getUserName().observe(this, Observer { userName ->
-            binding.etUsernameSignup.setText(userName)
-        })
-        binding.btnSignup.setOnClickListener {
-            viewModel.setEmail(binding.etEmailSignup.text.toString())
-            viewModel.setPassword(binding.etPasswordSignup.text.toString())
-            viewModel.setUserName(binding.etUsernameSignup.text.toString())
-            viewModel.buildAccountModel(
-                binding.etUsernameSignup.text.toString(),
-                binding.etEmailSignup.text.toString(),
-                binding.etPasswordSignup.text.toString()
-            )
-        }
-        binding.tvAlreadyAccount.setOnClickListener {
-            LoginActivity.startActivity(this)
-            finish()
-        }
+//        val factory = InjectorUtils.provideSignupViewModelFactory()
+//        val viewModel = ViewModelProvider(this, factory)
+//            .get(SignupViewModel::class.java)
+//        viewModel.getEmail().observe(this, Observer { email ->
+//            binding.etEmailSignup.setText(email)
+//        })
+//        viewModel.getPassword().observe(this, Observer { password ->
+//            binding.etPasswordSignup.setText(password)
+//        })
+//        viewModel.getUserName().observe(this, Observer { userName ->
+//            binding.etUsernameSignup.setText(userName)
+//        })
+//        binding.btnSignup.setOnClickListener {
+//            viewModel.setEmail(binding.etEmailSignup.text.toString())
+//            viewModel.setPassword(binding.etPasswordSignup.text.toString())
+//            viewModel.setUserName(binding.etUsernameSignup.text.toString())
+//            viewModel.buildAccountModel(
+//                binding.etUsernameSignup.text.toString(),
+//                binding.etEmailSignup.text.toString(),
+//                binding.etPasswordSignup.text.toString()
+//            )
+//        }
+//        binding.tvAlreadyAccount.setOnClickListener {
+//            LoginActivity.startActivity(this)
+//            finish()
+//        }
     }
 }

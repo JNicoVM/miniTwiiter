@@ -2,8 +2,7 @@ package com.jnicovm.minitwitter.models.request
 
 import com.google.gson.annotations.SerializedName
 
-data class RequestLogin (
-
+data class RequestLogin(
 	@SerializedName("email")
 	val email : String,
 	@SerializedName("password")

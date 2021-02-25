@@ -1,7 +1,7 @@
 package com.jnicovm.minitwitter.di
 
 import android.app.Application
-import com.jnicovm.minitwitter.activities.login.LoginActivity
+import com.jnicovm.minitwitter.dao.LoginDaoModule
 import com.jnicovm.minitwitter.repository.RepositoryModule
 import com.jnicovm.minitwitter.retrofit.APIModules
 import dagger.BindsInstance
@@ -11,7 +11,9 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [
     APIModules::class,
-    RepositoryModule::class
+    RepositoryModule::class,
+    LoginDaoModule::class,
+    UseCaseModule::class
 ])
 interface MiniTwitterComponent {
 

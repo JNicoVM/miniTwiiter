@@ -1,5 +1,6 @@
 package com.jnicovm.minitwitter.repository
 
+import com.jnicovm.minitwitter.dao.LoginDao
 import com.jnicovm.minitwitter.data.RemoteLoginDataSource
 import dagger.Module
 import dagger.Provides
@@ -9,8 +10,10 @@ class RepositoryModule {
 
     @Provides
     fun loginRepositoryProvider(
-        remoteLoginDataSource: RemoteLoginDataSource
+        remoteLoginDataSource: RemoteLoginDataSource,
+        loginDao: LoginDao
     ) = LoginRepository(
-        remoteLoginDataSource
+        remoteLoginDataSource,
+        loginDao
     )
 }

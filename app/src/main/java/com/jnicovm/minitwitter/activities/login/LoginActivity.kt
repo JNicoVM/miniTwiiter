@@ -2,12 +2,16 @@ package com.jnicovm.minitwitter.activities.login
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.jnicovm.minitwitter.activities.signup.SignupActivity
 import com.jnicovm.minitwitter.databinding.ActivityLoginBinding
+import com.jnicovm.minitwitter.di.LoginComponent
+import com.jnicovm.minitwitter.di.LoginModule
+import com.jnicovm.minitwitter.utilities.app
+import com.jnicovm.minitwitter.utilities.getViewModel
+import com.jnicovm.minitwitter.utilities.showLongToast
 
 class LoginActivity : AppCompatActivity() {
 
@@ -23,6 +27,11 @@ class LoginActivity : AppCompatActivity() {
 
     //Binding
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var loginComponent: LoginComponent
+
+    private val loginViewModel: LoginViewModel by lazy {
+       getViewModel { loginComponent.loginViewModel }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,21 +42,27 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initializeUi(){
-        val factory = InjectorUtils.provideLoginViewModelFactory()
-        val viewModel = ViewModelProvider(this, factory)
-                .get(LoginViewModel::class.java)
-        viewModel.getEmail().observe(this, Observer { email ->
+        loginComponent = app.component.inject(LoginModule())
+        loginViewModel.getEmail().observe(this, Observer { email ->
             binding.etEmailLogin.setText(email)
         })
-        viewModel.getPassword().observe(this, Observer { password ->
+        loginViewModel.getPassword().observe(this, Observer { password ->
             binding.etPasswordLogin.setText(password)
         })
         binding.btnLogin.setOnClickListener {
-            viewModel.setEmail(binding.etEmailLogin.text.toString())
+            loginViewModel.setEmail(binding.etEmailLogin.text.toString())
+            loginViewModel.setPassword(binding.etPasswordLogin.text.toString())
+            loginViewModel.perfomLogin()
+
+            loginViewModel.buildLoginRequest(loginViewModel.getEmail().value?:"",
+                loginViewModel.getPassword().value?:"")
         }
         binding.tvDontHaveAccount.setOnClickListener {
             SignupActivity.startActivity(this)
             finish()
         }
+        loginViewModel.loginValues.observe(this, Observer {
+            showLongToast("Se ha intentado loguear el usuario ${it.username}")
+        })
     }
 }

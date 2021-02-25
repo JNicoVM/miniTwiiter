@@ -1,9 +1,10 @@
 package com.jnicovm.minitwitter.retrofit
 
+import android.content.Context
 import com.jnicovm.minitwitter.dao.AccountDao
-import com.jnicovm.minitwitter.repository.AccountRepository
 
-public class MiniTwitterClient{
+class MiniTwitterClient (){
+
     companion object{
         @Volatile private var instance: MiniTwitterClient? = null
 
